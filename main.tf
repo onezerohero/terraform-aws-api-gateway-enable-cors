@@ -53,6 +53,19 @@ resource "aws_api_gateway_integration_response" "_" {
 
   response_parameters = local.integration_response_parameters
 
+  response_templates = {
+    "application/json" = <<E0F
+{
+    $input.json("$")
+    #set($domains = ["${join("\", \"", var.allow_origin)}"])
+    #set($origin = $input.params("origin"))
+    #if($domains.contains($origin))
+    #set($context.responseOverride.header.Access-Control-Allow-Origin="$origin")
+    #end
+}
+E0F
+  }
+
   depends_on = [
     aws_api_gateway_integration._,
     aws_api_gateway_method_response._,

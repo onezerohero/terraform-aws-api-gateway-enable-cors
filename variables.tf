@@ -69,8 +69,8 @@ variable "allow_methods" {
 # var.allow_origin
 variable "allow_origin" {
   description = "Allow origin"
-  type        = string
-  default     = "*"
+  type        = list(string)
+  default     = ["*"]
 }
 
 # var.allow_max_age
