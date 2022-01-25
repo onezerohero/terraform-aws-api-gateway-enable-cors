@@ -53,7 +53,7 @@ resource "aws_api_gateway_integration_response" "_" {
 
   response_parameters = local.integration_response_parameters
 
-  response_templates = {
+  response_templates = !contains(var.allow_origin, "*") ? {
     "application/json" = <<E0F
 {
     $input.json("$")
@@ -64,7 +64,7 @@ resource "aws_api_gateway_integration_response" "_" {
     #end
 }
 E0F
-  }
+  } : {}
 
   depends_on = [
     aws_api_gateway_integration._,
