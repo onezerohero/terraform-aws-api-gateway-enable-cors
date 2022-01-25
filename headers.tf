@@ -27,7 +27,7 @@ locals {
   headers = {
     "Access-Control-Allow-Headers"     = "'${join(",", var.allow_headers)}'"
     "Access-Control-Allow-Methods"     = "'${join(",", var.allow_methods)}'"
-    "Access-Control-Allow-Origin"      = "'${var.allow_origin}'"
+    "Access-Control-Allow-Origin"      =  contains(var.allow_origin, "*") ? "*" : ""
     "Access-Control-Max-Age"           = "'${var.allow_max_age}'"
     "Access-Control-Allow-Credentials" = var.allow_credentials ? "'true'" : ""
   }
